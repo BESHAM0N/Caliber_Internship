@@ -22,6 +22,7 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawn()
     {
+        
         increaseButton.SetActive(true);
         reduceButton.SetActive(true);
         AddPrefabs();

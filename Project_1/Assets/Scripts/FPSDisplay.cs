@@ -6,6 +6,8 @@ public class FPSDisplay : MonoBehaviour
 {
     [SerializeField] private Text _currentCounter;
     [SerializeField] private Text _averageCounter;
+    public GameObject currentFPS;
+    public GameObject averageFPS;
     
 
     private FPSCounter _fpsCounter;
@@ -20,4 +22,11 @@ public class FPSDisplay : MonoBehaviour
         _currentCounter.text = _fpsCounter.CurrentFps.ToString();
         _averageCounter.text = _fpsCounter.AverageFps.ToString();
     }
+    public void StartDisplay()
+    {
+        currentFPS.SetActive(true);
+        averageFPS.SetActive(true);
+    }
+
+    
 }
