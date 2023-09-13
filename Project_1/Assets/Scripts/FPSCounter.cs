@@ -1,12 +1,18 @@
 using UnityEngine;
+using System;
+using System.Linq;
 
 public class FPSCounter : MonoBehaviour
 {
     [SerializeField] private int _frameRange = 60;
     private int[] _fpsBuffer;
     private int _fpsBufferIndex;
-    public int CurrentFps { get; private set; } 
-    public int AverageFps { get; private set; } 
+    public int CurrentFps { get; private set; }
+    public int AverageFps { get; private set; }
+
+    public double Percentile5 { get; private set; }
+
+    public double Percentile1 { get; private set; }
 
     private static int CalculateFps()
     {
@@ -17,17 +23,24 @@ public class FPSCounter : MonoBehaviour
     {
         if (_fpsBuffer == null || _frameRange != _fpsBuffer.Length)
             InitializeBuffer();
-        
+
         UpdateBuffer();
         CurrentFps = CalculateFps();
         AverageFps = CalculateAverageFps();
+    }
+
+    public void LateUpdate()
+    {
+        UpdateBuffer();
+        Percentile5 = CalculatePercentile(_fpsBuffer, 0.05);
+        Percentile1 = CalculatePercentile(_fpsBuffer, 0.01);
     }
 
     private void InitializeBuffer()
     {
         if (_frameRange <= 0)
             _frameRange = 1;
-        
+
         _fpsBuffer = new int[_frameRange];
         _fpsBufferIndex = 0;
     }
@@ -44,7 +57,16 @@ public class FPSCounter : MonoBehaviour
         int sum = 0;
         for (int i = 0; i < _frameRange; i++)
             sum += _fpsBuffer[i];
-        
-        return  sum / _frameRange;
+
+        return sum / _frameRange;
     }
+
+    private double CalculatePercentile(int[] data, double percentile)
+    {
+        var orderedFps = data.OrderBy(n => n).ToArray();
+        Debug.Log(string.Join(",", orderedFps));
+        var percentileIndex = (int)Math.Round(percentile * orderedFps.Length);
+        return orderedFps[percentileIndex];
+    }
+    
 }

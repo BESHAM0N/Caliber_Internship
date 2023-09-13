@@ -6,8 +6,12 @@ public class FPSDisplay : MonoBehaviour
 {
     [SerializeField] private Text _currentCounter;
     [SerializeField] private Text _averageCounter;
+    [SerializeField] private Text _percentile5;
+    [SerializeField] private Text _percentile1;
     public GameObject currentFPS;
     public GameObject averageFPS;
+    public GameObject percentile5;
+    public GameObject percentile1;
     
 
     private FPSCounter _fpsCounter;
@@ -19,13 +23,18 @@ public class FPSDisplay : MonoBehaviour
 
     private void Update()
     {
-        _currentCounter.text = _fpsCounter.CurrentFps.ToString();
-        _averageCounter.text = _fpsCounter.AverageFps.ToString();
+        _currentCounter.text = "current FPS " + _fpsCounter.CurrentFps;
+        _averageCounter.text = "average FPS " + _fpsCounter.AverageFps;
+        _percentile5.text = "5 percent FPS " + _fpsCounter.Percentile5;
+        _percentile1.text = "1 percent FPS " + _fpsCounter.Percentile1;
+
     }
     public void StartDisplay()
     {
         currentFPS.SetActive(true);
         averageFPS.SetActive(true);
+        percentile5.SetActive(true);
+        percentile1.SetActive(true);
     }
 
     
