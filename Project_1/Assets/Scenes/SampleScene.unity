@@ -135,12 +135,12 @@ GameObject:
   - component: {fileID: 577434040}
   - component: {fileID: 577434039}
   m_Layer: 0
-  m_Name: Percentile 1
+  m_Name: 'One percentile '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &577434038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: ecadce131b853ba418da7843d708e6f2, type: 3}
-    m_FontSize: 6
+    m_FontSize: 4
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -283,7 +283,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 610895960}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 997679176}
+        m_TargetAssemblyTypeName: FPSCounter, Assembly-CSharp
+        m_MethodName: RestartCount
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &610895960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,12 +346,12 @@ GameObject:
   - component: {fileID: 656157140}
   - component: {fileID: 656157139}
   m_Layer: 0
-  m_Name: Percentile 5
+  m_Name: Five percentile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &656157138
 RectTransform:
   m_ObjectHideFlags: 0
@@ -381,7 +393,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: ecadce131b853ba418da7843d708e6f2, type: 3}
-    m_FontSize: 6
+    m_FontSize: 4
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -580,7 +592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &874287513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -622,7 +634,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: ecadce131b853ba418da7843d708e6f2, type: 3}
-    m_FontSize: 6
+    m_FontSize: 4
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -909,8 +921,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -78.55698, y: 29.496994}
-  m_SizeDelta: {x: -930.513, y: -493.062}
+  m_AnchoredPosition: {x: -79.88803, y: 29.496994}
+  m_SizeDelta: {x: -933.175, y: -493.062}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &997679173
 MonoBehaviour:
@@ -964,10 +976,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentCounter: {fileID: 874287514}
   _averageCounter: {fileID: 2027907166}
-  _Percentile5: {fileID: 656157139}
-  _Percentile1: {fileID: 577434039}
+  _percentile5: {fileID: 656157139}
+  _percentile1: {fileID: 577434039}
   currentFPS: {fileID: 874287512}
   averageFPS: {fileID: 2027907164}
+  percentile5: {fileID: 656157137}
+  percentile1: {fileID: 577434037}
 --- !u!114 &997679176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1425,7 +1439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2027907165
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1467,7 +1481,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: ecadce131b853ba418da7843d708e6f2, type: 3}
-    m_FontSize: 6
+    m_FontSize: 4
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1

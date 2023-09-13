@@ -25,8 +25,8 @@ public class FPSDisplay : MonoBehaviour
     {
         _currentCounter.text = "current FPS " + _fpsCounter.CurrentFps;
         _averageCounter.text = "average FPS " + _fpsCounter.AverageFps;
-        _percentile5.text = "5 percent FPS " + _fpsCounter.Percentile5;
-        _percentile1.text = "1 percent FPS " + _fpsCounter.Percentile1;
+        _percentile5.text = "5 percent FPS " + _fpsCounter.FivePercentile;
+        _percentile1.text = "1 percent FPS " + _fpsCounter.OnePercentile;
 
     }
     public void StartDisplay()

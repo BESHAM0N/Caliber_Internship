@@ -10,9 +10,9 @@ public class FPSCounter : MonoBehaviour
     public int CurrentFps { get; private set; }
     public int AverageFps { get; private set; }
 
-    public double Percentile5 { get; private set; }
+    public double FivePercentile { get; private set; }
 
-    public double Percentile1 { get; private set; }
+    public double OnePercentile { get; private set; }
 
     private static int CalculateFps()
     {
@@ -27,14 +27,10 @@ public class FPSCounter : MonoBehaviour
         UpdateBuffer();
         CurrentFps = CalculateFps();
         AverageFps = CalculateAverageFps();
+        FivePercentile = CalculatePercentile(_fpsBuffer, 0.05);
+        OnePercentile = CalculatePercentile(_fpsBuffer, 0.01);
     }
-
-    public void LateUpdate()
-    {
-        UpdateBuffer();
-        Percentile5 = CalculatePercentile(_fpsBuffer, 0.05);
-        Percentile1 = CalculatePercentile(_fpsBuffer, 0.01);
-    }
+    
 
     private void InitializeBuffer()
     {
@@ -64,9 +60,13 @@ public class FPSCounter : MonoBehaviour
     private double CalculatePercentile(int[] data, double percentile)
     {
         var orderedFps = data.OrderBy(n => n).ToArray();
-        Debug.Log(string.Join(",", orderedFps));
         var percentileIndex = (int)Math.Round(percentile * orderedFps.Length);
         return orderedFps[percentileIndex];
+    }
+
+    public void RestartCount()
+    {
+        Array.Clear(_fpsBuffer, 0, _fpsBuffer.Length);
     }
     
 }
