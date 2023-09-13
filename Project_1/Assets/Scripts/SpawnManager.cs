@@ -7,8 +7,6 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject cookiePrefab;
     public List<GameObject> cookiesContainer;
-    public GameObject startButton;
-    public GameObject restartButton;
     public GameObject increaseButton;
     public GameObject reduceButton;
 
@@ -16,13 +14,8 @@ public class SpawnManager : MonoBehaviour
     private const float YMax = 10;
     private const float ZPosition = -0.5f;
 
-    [SerializeField] private int maxCountObject = 500;
-    private int minCountObject = 0;
-
-
     public void StartSpawn()
     {
-        
         increaseButton.SetActive(true);
         reduceButton.SetActive(true);
         AddPrefabs();
@@ -71,6 +64,5 @@ public class SpawnManager : MonoBehaviour
             reduceButton.SetActive(false);
 
         }
-        
     }
 }
