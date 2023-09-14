@@ -1,22 +1,35 @@
 using UnityEngine;
 using System;
 using System.Linq;
+using TMPro;
 
 public class FPSCounter : MonoBehaviour
 {
     [SerializeField] private int _frameRange = 60;
     private int[] _fpsBuffer;
     private int _fpsBufferIndex;
+    private float _updateTimer;
+    private float _updateFrequency = 0.1f;
+    private float _fps;
     public int CurrentFps { get; private set; }
     public int AverageFps { get; private set; }
-
     public double FivePercentile { get; private set; }
-
     public double OnePercentile { get; private set; }
 
-    private static int CalculateFps()
+    private int CalculateFps()
     {
         return (int)(1f / Time.unscaledDeltaTime);
+    }
+    
+    private int CalculateCurrentFps()
+    {
+        _updateTimer -= Time.deltaTime;
+        if (_updateTimer <= 0f)
+        {
+            _fps = 1f / Time.unscaledDeltaTime;
+            _updateTimer = _updateFrequency;
+        }
+        return (int)Math.Round(_fps);
     }
 
     public void Update()
@@ -25,7 +38,7 @@ public class FPSCounter : MonoBehaviour
             InitializeBuffer();
 
         UpdateBuffer();
-        CurrentFps = CalculateFps();
+        CurrentFps = CalculateCurrentFps();
         AverageFps = CalculateAverageFps();
         FivePercentile = CalculatePercentile(_fpsBuffer, 0.05);
         OnePercentile = CalculatePercentile(_fpsBuffer, 0.01);
@@ -67,5 +80,4 @@ public class FPSCounter : MonoBehaviour
     {
         Array.Clear(_fpsBuffer, 0, _fpsBuffer.Length);
     }
-    
 }

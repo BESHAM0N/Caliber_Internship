@@ -33,7 +33,6 @@ public class SpawnManager : MonoBehaviour
             GameObject newCookie = CreateCookiePrefab(cookiePrefab);
             cookieArray[i] = newCookie;
         }
-
         return cookieArray;
     }
 
