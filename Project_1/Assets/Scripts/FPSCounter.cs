@@ -30,7 +30,6 @@ public class FPSCounter : MonoBehaviour
         FivePercentile = CalculatePercentile(_fpsBuffer, 0.05);
         OnePercentile = CalculatePercentile(_fpsBuffer, 0.01);
     }
-    
 
     private void InitializeBuffer()
     {

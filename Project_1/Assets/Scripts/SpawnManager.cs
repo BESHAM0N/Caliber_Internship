@@ -9,10 +9,8 @@ public class SpawnManager : MonoBehaviour
     public List<GameObject> cookiesContainer;
     public GameObject increaseButton;
     public GameObject reduceButton;
+    [SerializeField] private float _spawnRadius = 6;
 
-    private const float XMax = 13;
-    private const float YMax = 10;
-    private const float ZPosition = -0.5f;
 
     public void StartSpawn()
     {
@@ -35,17 +33,15 @@ public class SpawnManager : MonoBehaviour
             GameObject newCookie = CreateCookiePrefab(cookiePrefab);
             cookieArray[i] = newCookie;
         }
+
         return cookieArray;
     }
 
     private GameObject CreateCookiePrefab(GameObject cookie)
     {
-        Vector3 newPosition = new Vector3(
-            Random.Range(-XMax, XMax),
-            Random.Range(-YMax, YMax),
-            ZPosition);
-        Quaternion rotation = new Quaternion(0, -90, 90, 0); 
-        return Instantiate(cookie, newPosition, rotation);
+        Quaternion rotation = new Quaternion(0, -90, 90, 0);
+        return Instantiate(cookie, cookie.transform.position +
+                                   Random.insideUnitSphere * _spawnRadius, rotation);
     }
 
     public void DeleteAllCookies()
@@ -53,16 +49,12 @@ public class SpawnManager : MonoBehaviour
         if (cookiesContainer.Any())
         {
             reduceButton.SetActive(true);
-            for (int i = cookiesContainer.Count-100; i < cookiesContainer.Count; i++)
-            {
+            for (int i = cookiesContainer.Count - 100; i < cookiesContainer.Count; i++)
                 Destroy(cookiesContainer[i]);
-            }
+
             cookiesContainer.RemoveRange(cookiesContainer.Count - 100, 100);
         }
         else
-        {
             reduceButton.SetActive(false);
-
-        }
     }
 }
