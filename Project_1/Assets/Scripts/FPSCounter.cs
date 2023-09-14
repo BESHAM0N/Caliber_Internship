@@ -1,83 +1,82 @@
 using UnityEngine;
 using System;
 using System.Linq;
-using TMPro;
+
 
 public class FPSCounter : MonoBehaviour
 {
-    [SerializeField] private int _frameRange = 60;
-    private int[] _fpsBuffer;
+    private const float _fivePercentile = 0.05f;
+    private const float _onePercentile = 0.01f;
+    private const int _bufferStepCapacity = 5000;
+    
+    private int[] _fpsBuffer = new int[_bufferStepCapacity];
     private int _fpsBufferIndex;
-    private float _updateTimer;
-    private float _updateFrequency = 0.1f;
-    private float _fps;
+    private int _bufferCount;
+    private int _currentFpsBuffer;
     public int CurrentFps { get; private set; }
     public int AverageFps { get; private set; }
     public double FivePercentile { get; private set; }
     public double OnePercentile { get; private set; }
 
-    private int CalculateFps()
+    public void Start()
+    {
+        InvokeRepeating("SetCurrentFps", 0, 0.2f);
+        InvokeRepeating("CalculateAverageFps", 0f, 0.5f);
+        InvokeRepeating("CalculatePercentile", 0f, 1f);
+    }
+    
+    public void Update()
+    {
+        _currentFpsBuffer = GetCurrentFps();
+        InsertInFpsBuffer(_currentFpsBuffer);
+    }
+    
+    private int GetCurrentFps()
     {
         return (int)(1f / Time.unscaledDeltaTime);
     }
-    
-    private int CalculateCurrentFps()
+
+    private void SetCurrentFps()
     {
-        _updateTimer -= Time.deltaTime;
-        if (_updateTimer <= 0f)
-        {
-            _fps = 1f / Time.unscaledDeltaTime;
-            _updateTimer = _updateFrequency;
-        }
-        return (int)Math.Round(_fps);
+        CurrentFps = _currentFpsBuffer;
     }
 
-    public void Update()
+    private void InsertInFpsBuffer(int currentFps)
     {
-        if (_fpsBuffer == null || _frameRange != _fpsBuffer.Length)
-            InitializeBuffer();
+        _fpsBuffer[_fpsBufferIndex++] = currentFps;
+        _bufferCount = _fpsBufferIndex++;
 
-        UpdateBuffer();
-        CurrentFps = CalculateCurrentFps();
-        AverageFps = CalculateAverageFps();
-        FivePercentile = CalculatePercentile(_fpsBuffer, 0.05);
-        OnePercentile = CalculatePercentile(_fpsBuffer, 0.01);
-    }
-
-    private void InitializeBuffer()
-    {
-        if (_frameRange <= 0)
-            _frameRange = 1;
-
-        _fpsBuffer = new int[_frameRange];
-        _fpsBufferIndex = 0;
-    }
-
-    private void UpdateBuffer()
-    {
-        _fpsBuffer[_fpsBufferIndex++] = CalculateFps();
-        if (_fpsBufferIndex >= _frameRange)
-            _fpsBufferIndex = 0;
+        if (_fpsBufferIndex >= _bufferCount)
+            Array.Resize(ref _fpsBuffer, _fpsBuffer.Length + _bufferStepCapacity);
     }
 
     private int CalculateAverageFps()
     {
-        int sum = 0;
-        for (int i = 0; i < _frameRange; i++)
-            sum += _fpsBuffer[i];
-
-        return sum / _frameRange;
+        int sum = _fpsBuffer.Sum();
+        if (sum > 0)
+            AverageFps = sum / _bufferCount;
+        return AverageFps;
     }
 
-    private double CalculatePercentile(int[] data, double percentile)
+    private void CalculatePercentile()
     {
-        var orderedFps = data.OrderBy(n => n).ToArray();
-        var percentileIndex = (int)Math.Round(percentile * orderedFps.Length);
-        return orderedFps[percentileIndex];
+        var orderedFps = _fpsBuffer.Where(i => i > 0).OrderBy(n => n).ToArray();
+        if (orderedFps.Any())
+        {
+            var fivePercentileIndex = (int)Math.Round(_fivePercentile * _bufferCount);
+            var onePercentileIndex = (int)Math.Round(_onePercentile * _bufferCount);
+            FivePercentile = orderedFps[fivePercentileIndex];
+            OnePercentile = orderedFps[onePercentileIndex];
+        }
     }
 
     public void RestartCount()
     {
-        Array.Clear(_fpsBuffer, 0, _fpsBuffer.Length);
+        _fpsBuffer = new int[1000];
+        AverageFps = 0;
+        FivePercentile = 0;
+        OnePercentile = 0;
+        _bufferCount = 0;
+        _fpsBufferIndex = 0;
     }
 }
