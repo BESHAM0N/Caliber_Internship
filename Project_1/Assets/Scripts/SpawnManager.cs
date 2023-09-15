@@ -13,7 +13,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject increaseButton;
     public GameObject reduceButton;
 
-    [SerializeField] private float _spawnRadius = 6f;
+    [SerializeField] private float _spawnRadius = 30f;
 
     public void StartSpawn()
     {
