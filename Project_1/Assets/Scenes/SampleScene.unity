@@ -1157,6 +1157,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 912347903}
+  - {fileID: 1520496109}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1438623295
@@ -1188,8 +1189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c662bf240f028c9448f2b41c4e7219b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookiePrefab: {fileID: 100000, guid: 10d25933610222845ad3760a855829c4, type: 3}
-  cookiesContainer: []
+  prefabsContainer: []
+  prefab: {fileID: 100000, guid: 10d25933610222845ad3760a855829c4, type: 3}
   increaseButton: {fileID: 1960238525}
   reduceButton: {fileID: 944571462}
   _spawnRadius: 6
@@ -1232,13 +1233,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520496108}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0053018206, y: 0.02156424, z: -0.6}
+  m_LocalScale: {x: 0.019279348, y: 0.025432527, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1559238211}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1403096903}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1559238210
 GameObject:
@@ -1691,4 +1692,3 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 1403096903}
-  - {fileID: 1520496109}

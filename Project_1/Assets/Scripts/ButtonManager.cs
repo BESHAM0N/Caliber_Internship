@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ButtonManager : MonoBehaviour
 {
     public Button startButton;
@@ -21,7 +20,7 @@ public class ButtonManager : MonoBehaviour
         startButton.onClick.AddListener(StartDisplay);
         restartButton.onClick.AddListener(RestartCount);
         increaseButton.onClick.AddListener(StartSpawn);
-        reduceButton.onClick.AddListener(DeleteAllCookies);
+        reduceButton.onClick.AddListener(DeleteHundredObjects);
     }
 
     private void StartDisplay()
@@ -39,8 +38,8 @@ public class ButtonManager : MonoBehaviour
         _spawnManager.StartSpawn();
     }
 
-    private void DeleteAllCookies()
+    private void DeleteHundredObjects()
     {
-        _spawnManager.DeleteHundredCookies();
+        _spawnManager.DeleteHundredObjects();
     }
 }

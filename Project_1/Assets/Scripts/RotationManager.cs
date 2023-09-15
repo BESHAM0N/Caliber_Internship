@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class RotationManager : MonoBehaviour
 {
     private const float _angle = 5f;

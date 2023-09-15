@@ -1,19 +1,19 @@
 using UnityEngine;
 using System;
 using System.Linq;
-
 public class FPSCounter : MonoBehaviour
 {
     private const float _fivePercentile = 0.05f;
     private const float _onePercentile = 0.01f;
     private const int _bufferStepCapacity = 1000;
-    private const float _CurrentRepeatRate = 0.12f;
-    private const float _AverageRepeatRate = 0.5f;
-    private const float _PercentileRepeatRate = 0.5f;
+    private const float _currentRepeatRate = 0.12f;
+    private const float _averageRepeatRate = 0.5f;
+    private const float _percentileRepeatRate = 1f;
+    private const float _invocationTime = 0f;
 
     private int[] _fpsBuffer = new int[_bufferStepCapacity];
     private int _fpsBufferIndex;
-    private int _currentFpsBuffer;
+    private int _lastFps;
     public int CurrentFps { get; private set; }
     public int AverageFps { get; private set; }
     public double FivePercentile { get; private set; }
@@ -21,9 +21,9 @@ public class FPSCounter : MonoBehaviour
 
     public void Start()
     {
-        InvokeRepeating("SetCurrentFps", 0f, _CurrentRepeatRate);
-        InvokeRepeating("CalculateAverageFps", 0f, _AverageRepeatRate);
-        InvokeRepeating("CalculatePercentile", 0f, _PercentileRepeatRate);
+        InvokeRepeating("SetCurrentFps", _invocationTime, _currentRepeatRate);
+        InvokeRepeating("CalculateAverageFps", _invocationTime, _averageRepeatRate);
+        InvokeRepeating("CalculatePercentile", _invocationTime, _percentileRepeatRate);
     }
 
     public void Update()
@@ -33,13 +33,13 @@ public class FPSCounter : MonoBehaviour
 
     private void SetCurrentFps()
     {
-        CurrentFps = _currentFpsBuffer;
+        CurrentFps = _lastFps;
     }
 
     private void CalculateCurrentFps()
     {
         var fps = (int)Math.Round(1f / Time.unscaledDeltaTime);
-        _currentFpsBuffer = fps;
+        _lastFps = fps;
         _fpsBuffer[_fpsBufferIndex] = fps;
         _fpsBufferIndex++;
 
@@ -54,8 +54,6 @@ public class FPSCounter : MonoBehaviour
             AverageFps = sum / _fpsBufferIndex + 1;
         return AverageFps;
     }
-    
-    
 
     private void CalculatePercentile()
     {
@@ -64,20 +62,23 @@ public class FPSCounter : MonoBehaviour
         {
             var onePercentileIndex = (int)Math.Round(_onePercentile * _fpsBufferIndex);
             var fivePercentileIndex = (int)Math.Round(_fivePercentile * _fpsBufferIndex);
-            OnePercentile = SumPercentile(onePercentileIndex, orderedFps);
-            FivePercentile = SumPercentile(fivePercentileIndex, orderedFps);            
+            OnePercentile = orderedFps[onePercentileIndex];
+            FivePercentile = orderedFps[fivePercentileIndex];
         }
     }
-
-    private int SumPercentile(int index, int[] array)
-    {
-        int sumPercentile = 0;
-        for (int i = 0; i <= index; i++)
-        {
-            sumPercentile += array[i];
-        }
-        return sumPercentile / (index + 1);
-    }
+    
+    //I think that this method has a place to be,
+    //since it can show a clearer frequency of instantaneous fps drops.
+    // private int SumPercentile(int index, int[] array)
+    // {
+    //     int sumPercentile = 0;
+    //     for (int i = 0; i <= index; i++)
+    //     {
+    //         sumPercentile += array[i];
+    //     }
+    //
+    //     return sumPercentile / (index + 1);
+    // }
 
     public void RestartCount()
     {

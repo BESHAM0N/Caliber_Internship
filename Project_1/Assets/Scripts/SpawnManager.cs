@@ -2,61 +2,63 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject cookiePrefab;
-    public List<GameObject> cookiesContainer;
+    private const float _yRotation = -90f;
+    private const float _zRotation = 90f;
+    private const int _maxNamber = 100;
+
+    public List<GameObject> prefabsContainer;
+    public GameObject prefab;
     public GameObject increaseButton;
     public GameObject reduceButton;
-    private const float _yRotation = -90;
-    private const float _zRotation = 90;
-    private const int _maxNamberCookies = 100;
-    [SerializeField] private float _spawnRadius = 6;
 
+    [SerializeField] private float _spawnRadius = 6f;
 
     public void StartSpawn()
     {
         increaseButton.SetActive(true);
         reduceButton.SetActive(true);
-        AddPrefabs();
+        AddObjects();
     }
 
-    private void AddPrefabs()
+    private void AddObjects()
     {
-        var hundred = GetHundredCookies();
-        cookiesContainer.AddRange(hundred);
+        var hundred = GetHundredObjects();
+        prefabsContainer.AddRange(hundred);
     }
 
-    private IEnumerable<GameObject> GetHundredCookies()
+    private IEnumerable<GameObject> GetHundredObjects()
     {
-        var cookieArray = new GameObject[_maxNamberCookies];
-        for (int i = 0; i < _maxNamberCookies; i++)
+        var prefabArray = new GameObject[_maxNamber];
+        for (int i = 0; i < _maxNamber; i++)
         {
-            GameObject newCookie = CreateCookiePrefab(cookiePrefab);
-            cookieArray[i] = newCookie;
+            GameObject newPrefab = CreateObject(prefab);
+            prefabArray[i] = newPrefab;
         }
-        return cookieArray;
+        return prefabArray;
     }
 
-    private GameObject CreateCookiePrefab(GameObject cookie)
+    private GameObject CreateObject(GameObject model)
     {
-        Quaternion rotation = new Quaternion(0, _yRotation, _zRotation, 0);
-        return Instantiate(cookie, cookie.transform.position +
+        Quaternion rotation = new Quaternion(0f, _yRotation, _zRotation, 0f);
+        return Instantiate(model, model.transform.position +
                                    Random.insideUnitSphere * _spawnRadius, rotation);
     }
 
-    public void DeleteHundredCookies()
+    public void DeleteHundredObjects()
     {
-        if (cookiesContainer.Any())
+        if (prefabsContainer.Any())
         {
             reduceButton.SetActive(true);
-            for (int i = cookiesContainer.Count - _maxNamberCookies; i < cookiesContainer.Count; i++)
-                Destroy(cookiesContainer[i]);
+            for (int i = prefabsContainer.Count - _maxNamber; i < prefabsContainer.Count; i++)
+                Destroy(prefabsContainer[i]);
 
-            cookiesContainer.RemoveRange(cookiesContainer.Count - _maxNamberCookies, _maxNamberCookies);
+            prefabsContainer.RemoveRange(prefabsContainer.Count - _maxNamber, _maxNamber);
         }
         else
+        {
             reduceButton.SetActive(false);
+        }
     }
 }

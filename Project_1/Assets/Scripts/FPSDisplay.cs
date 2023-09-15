@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 [RequireComponent(typeof(FPSCounter))]
 public class FPSDisplay : MonoBehaviour
 {
@@ -8,10 +7,12 @@ public class FPSDisplay : MonoBehaviour
     [SerializeField] private Text _averageCounter;
     [SerializeField] private Text _fivePercentile;
     [SerializeField] private Text _onePercentile;
+    
     public GameObject currentFPS;
     public GameObject averageFPS;
     public GameObject fivePercentile;
     public GameObject onePercentile;
+    
     private FPSCounter _fpsCounter;
 
     private void Awake()
