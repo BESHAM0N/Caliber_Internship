@@ -16,8 +16,8 @@ public class FPSCounter : MonoBehaviour
     private int _lastFps;
     public int CurrentFps { get; private set; }
     public int AverageFps { get; private set; }
-    public double FivePercentile { get; private set; }
-    public double OnePercentile { get; private set; }
+    public int FivePercentile { get; private set; }
+    public int OnePercentile { get; private set; }
 
     public void Start()
     {
