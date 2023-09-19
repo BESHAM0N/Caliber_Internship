@@ -32,10 +32,10 @@ public class ShopService : MonoBehaviour
 
     private void AddItemInInventory(ShopItem shopItem)
     {
-        OwnedItem first = _storage.PlayerInventory.PlayerItems.SingleOrDefault(x => x.Id == shopItem.Id);
+        var first = _storage.PlayerInventory.PlayerItems.SingleOrDefault(x => x.Id == shopItem.Id);
         if (first == null)
         {
-            OwnedItem ownedItem = new OwnedItem()
+            var ownedItem = new OwnedItem
             {
                 Id = shopItem.Id,
                 Name = shopItem.Name,
@@ -55,8 +55,13 @@ public class ShopService : MonoBehaviour
 
     private void DeleteOrReduceItemFromInventory(ShopItem shopItem)
     {
-        OwnedItem first = _storage.PlayerInventory.PlayerItems.SingleOrDefault(x => x.Id == shopItem.Id);
+        var first = _storage.PlayerInventory.PlayerItems.SingleOrDefault(x => x.Id == shopItem.Id);
 
+        if (first == null)
+        {
+            Debug.Log("Вещь не найдена в инвентаре игрока");
+            return;
+        }
         if (first.Amount == 1)
         {
             _storage.PlayerInventory.PlayerItems.Remove(first);
@@ -67,7 +72,7 @@ public class ShopService : MonoBehaviour
         _dataProvider.Save();
     }
 
-    public void AddCoins(int coins)
+    private void AddCoins(int coins)
     {
         if (coins < 0)
         {
@@ -78,7 +83,7 @@ public class ShopService : MonoBehaviour
         _storage.PlayerInventory.Money += coins;
     }
 
-    public void Spend(int coins)
+    private void Spend(int coins)
     {
         if (coins < 0)
         {
