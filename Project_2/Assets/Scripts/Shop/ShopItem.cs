@@ -1,4 +1,3 @@
-using UnityEngine;
 public class ShopItem
 {
     public int Id { get; set; }

@@ -2,31 +2,31 @@
   "ShopItems": [
     {
       "Id": 1,
-      "Name": "Малое зелье здоровья",
+      "Name": "Странное яблоко",
       "BuyPrice": 2,
       "SellPrice": 1
     },
     {
       "Id": 2,
-      "Name": "Большое зелье здоровья",
+      "Name": "Зелье здоровья",
       "BuyPrice": 5,
       "SellPrice": 4
     },
     {
       "Id": 3,
-      "Name": "Малое зелье маны",
+      "Name": "Зелье маны",
       "BuyPrice": 2,
       "SellPrice": 1
     },
     {
       "Id": 4,
-      "Name": "Большое зелье маны",
+      "Name": "Сапфир",
       "BuyPrice": 4,
       "SellPrice": 3
     },
     {
       "Id": 5,
-      "Name": "Зелье крепкости",
+      "Name": "Кольцо власти",
       "BuyPrice": 5,
       "SellPrice": 4
     },
@@ -38,26 +38,26 @@
     },
     {
       "Id": 7,
-      "Name": "Кукла вуду",
+      "Name": "Мантия",
       "BuyPrice": 25,
       "SellPrice": 15
     },
     {
       "Id": 8,
-      "Name": "Флакон со святой водой",
+      "Name": "Ожерелье",
       "BuyPrice": 10,
       "SellPrice": 5
     },
     {
       "Id": 9,
-      "Name": "Волшебная палочка",
+      "Name": "Рецепт",
       "BuyPrice": 25,
       "SellPrice": 10
     }
   ],
   "Packs": [
     {
-      "Items": [
+      "ShopItems": [
         6,
         7,
         9

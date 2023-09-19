@@ -1,33 +1,28 @@
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
-
-
-public class LocalDataProvider : IDataProvider
+public class LocalDataProvider 
 {
-    private const string _firstFileName = "PlayerInventory";
-    private const string _secondFileName = "Shop";
+    private const string _inventoryFileName = "PlayerInventory";
+    private const string _shopFileName = "Shop";
     private const string _saveFileExtension = ".json";
-
-    private IPlayerData _playerData;
-    private IShopService _shopService;
+    private Storage _storage;
     
-    public LocalDataProvider(IPlayerData playerData, IShopService shopService) 
-        {
-            _playerData = playerData;
-            _shopService = shopService;
-        }
+    public LocalDataProvider(Storage storage)
+    {
+        _storage = storage;
+    }
     
     private string _savePath => Application.dataPath;
-    private string _fullPathToInventory => Path.Combine(_savePath, $"{_firstFileName}{_saveFileExtension}");
-    private string _fullPathToShop => Path.Combine(_savePath, $"{_secondFileName}{_saveFileExtension}");
+    private string _fullPathToInventory => Path.Combine(_savePath, $"{_inventoryFileName}{_saveFileExtension}");
+    private string _fullPathToShop => Path.Combine(_savePath, $"{_shopFileName}{_saveFileExtension}");
 
     private bool IsDataFileInventoryExist() => File.Exists(_fullPathToInventory);
     private bool IsDataFileShopExist() => File.Exists(_fullPathToShop);
 
     public void Save()
     {
-        File.WriteAllText(_fullPathToInventory, JsonConvert.SerializeObject(_playerData.PlayerInventory));
+        File.WriteAllText(_fullPathToInventory, JsonConvert.SerializeObject(_storage.PlayerInventory));
     }
 
     public bool LoadInventory()
@@ -35,8 +30,8 @@ public class LocalDataProvider : IDataProvider
         if (IsDataFileInventoryExist() == false)
             return false;
 
-        _playerData.PlayerInventory =
-            JsonConvert.DeserializeObject<PlayerInventory>(File.ReadAllText(_fullPathToInventory));
+        _storage.PlayerInventory 
+            = JsonConvert.DeserializeObject<PlayerInventory>(File.ReadAllText(_fullPathToInventory));
         return true;
     }
 
@@ -45,7 +40,8 @@ public class LocalDataProvider : IDataProvider
         if (IsDataFileShopExist() == false)
             return false;
         
-        _shopService.Shop = JsonConvert.DeserializeObject<Shop>(File.ReadAllText(_fullPathToShop)); 
+        _storage.ShopConfig = JsonConvert.DeserializeObject<Shop>(File.ReadAllText(_fullPathToShop));
+        
         return true;
     }
 }

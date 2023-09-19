@@ -3,15 +3,8 @@ using System.Collections.Generic;
 
 public class PlayerInventory
 {
-    public List<OwnedItem> PlayerItems { get; set; }
-
-    private int _money;
-
-    public PlayerInventory()
-    {
-        _money = 100;
-        PlayerItems = new();
-    }
+    public List<OwnedItem> PlayerItems { get; set; } = new();
+    private int _money = 100;
 
     public int Money
     {

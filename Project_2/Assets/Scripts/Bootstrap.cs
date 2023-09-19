@@ -2,53 +2,51 @@ using System.Linq;
 using UnityEngine;
 public class Bootstrap : MonoBehaviour
 {
+    [SerializeField] private ShopService _shopService;
     [SerializeField] private ShopController _shopController;
-    
-    private IPlayerData _playerData;
-    private IDataProvider _dataProvider;
-    private IShopService _shopService;
+
+    private Storage _storage;
+    private LocalDataProvider _dataProvider;
 
     public void Awake()
     {
         InitializeData();
         InitializeShop();
-        SellTest();
+        BuyTest();
     }
 
     private void BuyTest()
     {
-        Debug.Log(string.Join(',', _shopService.Shop));
-        Debug.Log(_playerData.PlayerInventory.Money.ToString());
-        _shopController.Buy(_shopService.Shop.ShopItems.SingleOrDefault(c => c.Id == 1));
-        Debug.Log(_playerData.PlayerInventory.Money.ToString());
+        Debug.Log(string.Join(',', _storage.ShopConfig.ShopItems.ToList()));
+        Debug.Log(_storage.PlayerInventory.Money.ToString());
+        _shopService.Buy(_storage.ShopConfig.ShopItems.SingleOrDefault(c => c.Id == 1));
+        Debug.Log(_storage.PlayerInventory.Money.ToString());
     }
 
     private void SellTest()
     {
-        Debug.Log(_playerData.PlayerInventory.Money.ToString());
-        _shopController.Sell(_shopService.Shop.ShopItems.SingleOrDefault(c => c.Id == 1));
-        Debug.Log(_playerData.PlayerInventory.Money.ToString());
+        Debug.Log(_storage.PlayerInventory.Money.ToString());
+        _shopService.Sell(_storage.ShopConfig.ShopItems.SingleOrDefault(c => c.Id == 1));
+        Debug.Log(_storage.PlayerInventory.Money.ToString());
     }
-    
 
     private void InitializeData()
     {
-        _playerData = new PlayerData();
-        _shopService = new ShopService();
-        
-        _dataProvider = new LocalDataProvider(_playerData, _shopService);
+        _storage = new Storage();
+        _dataProvider = new LocalDataProvider(_storage);
         LoadDataOrInit();
     }
 
     private void InitializeShop()
     {
-        _shopController.Initialize(_playerData, _shopService, _dataProvider);
+        _shopService.Initialize(_storage, _dataProvider);
+        _shopController.Initialize(_shopService);
     }
 
     private void LoadDataOrInit()
     {
         if (_dataProvider.LoadInventory() == false)
-            _playerData.PlayerInventory = new PlayerInventory();
+            _storage.PlayerInventory = new PlayerInventory();
         _dataProvider.LoadShop();
     }
 }
