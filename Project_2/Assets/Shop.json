@@ -1,0 +1,70 @@
+﻿{
+  "ShopItems": [
+    {
+      "Id": 1,
+      "Name": "Малое зелье здоровья",
+      "BuyPrice": 2,
+      "SellPrice": 1
+    },
+    {
+      "Id": 2,
+      "Name": "Большое зелье здоровья",
+      "BuyPrice": 5,
+      "SellPrice": 4
+    },
+    {
+      "Id": 3,
+      "Name": "Малое зелье маны",
+      "BuyPrice": 2,
+      "SellPrice": 1
+    },
+    {
+      "Id": 4,
+      "Name": "Большое зелье маны",
+      "BuyPrice": 4,
+      "SellPrice": 3
+    },
+    {
+      "Id": 5,
+      "Name": "Зелье крепкости",
+      "BuyPrice": 5,
+      "SellPrice": 4
+    },
+    {
+      "Id": 6,
+      "Name": "Гримуар",
+      "BuyPrice": 10,
+      "SellPrice": 5
+    },
+    {
+      "Id": 7,
+      "Name": "Кукла вуду",
+      "BuyPrice": 25,
+      "SellPrice": 15
+    },
+    {
+      "Id": 8,
+      "Name": "Флакон со святой водой",
+      "BuyPrice": 10,
+      "SellPrice": 5
+    },
+    {
+      "Id": 9,
+      "Name": "Волшебная палочка",
+      "BuyPrice": 25,
+      "SellPrice": 10
+    }
+  ],
+  "Packs": [
+    {
+      "Items": [
+        6,
+        7,
+        9
+      ],
+      "Name": "Набор юного волшебника",
+      "BuyPrice": 50,
+      "SellPrice": 30
+    }
+  ]
+}

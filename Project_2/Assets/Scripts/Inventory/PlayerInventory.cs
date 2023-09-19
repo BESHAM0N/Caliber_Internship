@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
+
 public class PlayerInventory
 {
-    //public int Money {get; set;}
-    public List<OwnedItems> PlayerItems {get; set;}
+    public List<OwnedItem> PlayerItems { get; set; }
 
-    private int _money = 1000;
+    private int _money;
+
+    public PlayerInventory()
+    {
+        _money = 100;
+        PlayerItems = new();
+    }
 
     public int Money
     {
@@ -18,7 +24,4 @@ public class PlayerInventory
             _money = value;
         }
     }
-
-
 }
-    
