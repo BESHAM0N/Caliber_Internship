@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 public class Bootstrap : MonoBehaviour
 {
-    [SerializeField] private ShopService _shopService;
+    //[SerializeField] private ShopService _shopService;
     [SerializeField] private ShopController _shopController;
 
     private Storage _storage;
@@ -19,7 +19,7 @@ public class Bootstrap : MonoBehaviour
     {
         Debug.Log(string.Join(',', _storage.ShopConfig.ShopItems.Select(x => x.Id).ToList()));
         Debug.Log(_storage.PlayerInventory.Money.ToString());                           
-        var result = _shopService.Buy(_storage.ShopConfig.Packs.FirstOrDefault(c => c.Id == "Young Wizard's pack"));
+        var result = _shopController.Buy(_storage.ShopConfig.Packs.FirstOrDefault(c => c.Id == "Young Wizard's pack"));
         if (!result)
         {
             Debug.Log("Покупка не удалась");
@@ -30,7 +30,7 @@ public class Bootstrap : MonoBehaviour
     private void SellTest()
     {
         Debug.Log(_storage.PlayerInventory.Money.ToString());
-        _shopService.Sell(_storage.ShopConfig.ShopItems.FirstOrDefault(c => c.Id == "Recipe"));
+        _shopController.Sell(_storage.ShopConfig.ShopItems.FirstOrDefault(c => c.Id == "Recipe"));
         Debug.Log(_storage.PlayerInventory.Money.ToString());
     }
 
@@ -43,8 +43,8 @@ public class Bootstrap : MonoBehaviour
 
     private void InitializeShop()
     {
-        _shopService.Initialize(_storage, _dataProvider);
-        _shopController.Initialize(_shopService);
+       _shopController.Initialize(_storage, _dataProvider);
+        //_shopController.Initialize(_shopService);
     }
 
     private void LoadDataOrInit()
