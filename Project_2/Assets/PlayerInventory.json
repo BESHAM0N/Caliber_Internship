@@ -1,1 +1,1 @@
-{"PlayerItems":[{"Amount":4,"Id":1,"Name":"Странное яблоко","BuyPrice":2,"SellPrice":1}],"Money":89}
+{"PlayerItems":[{"Amount":7,"Id":"Recipe","Name":"Рецепт","BuyPrice":25,"SellPrice":10},{"Amount":1,"Id":"Grimoire","Name":"Гримуар","BuyPrice":10,"SellPrice":5},{"Amount":1,"Id":"Mantle","Name":"Мантия","BuyPrice":25,"SellPrice":15}],"Money":900}

@@ -17,16 +17,20 @@ public class Bootstrap : MonoBehaviour
 
     private void BuyTest()
     {
-        Debug.Log(string.Join(',', _storage.ShopConfig.ShopItems.ToList()));
-        Debug.Log(_storage.PlayerInventory.Money.ToString());
-        _shopService.Buy(_storage.ShopConfig.ShopItems.SingleOrDefault(c => c.Id == 1));
+        Debug.Log(string.Join(',', _storage.ShopConfig.ShopItems.Select(x => x.Id).ToList()));
+        Debug.Log(_storage.PlayerInventory.Money.ToString());                           
+        var result = _shopService.Buy(_storage.ShopConfig.Packs.FirstOrDefault(c => c.Id == "Young Wizard's pack"));
+        if (!result)
+        {
+            Debug.Log("Покупка не удалась");
+        }
         Debug.Log(_storage.PlayerInventory.Money.ToString());
     }
 
     private void SellTest()
     {
         Debug.Log(_storage.PlayerInventory.Money.ToString());
-        _shopService.Sell(_storage.ShopConfig.ShopItems.SingleOrDefault(c => c.Id == 1));
+        _shopService.Sell(_storage.ShopConfig.ShopItems.FirstOrDefault(c => c.Id == "Recipe"));
         Debug.Log(_storage.PlayerInventory.Money.ToString());
     }
 
@@ -45,8 +49,9 @@ public class Bootstrap : MonoBehaviour
 
     private void LoadDataOrInit()
     {
-        if (_dataProvider.LoadInventory() == false)
+        if (!_dataProvider.LoadInventory())
             _storage.PlayerInventory = new PlayerInventory();
-        _dataProvider.LoadShop();
+        if (!_dataProvider.LoadShop())
+            _storage.ShopConfig = new Shop();
     }
 }

@@ -1,55 +1,55 @@
 ﻿{
   "ShopItems": [
     {
-      "Id": 1,
+      "Id": "Strange Apple",
       "Name": "Странное яблоко",
       "BuyPrice": 2,
       "SellPrice": 1
     },
     {
-      "Id": 2,
+      "Id": "Health Potion",
       "Name": "Зелье здоровья",
       "BuyPrice": 5,
       "SellPrice": 4
     },
     {
-      "Id": 3,
+      "Id": "Mana Potion",
       "Name": "Зелье маны",
       "BuyPrice": 2,
       "SellPrice": 1
     },
     {
-      "Id": 4,
+      "Id": "Sapphire",
       "Name": "Сапфир",
       "BuyPrice": 4,
       "SellPrice": 3
     },
     {
-      "Id": 5,
+      "Id": "Ring of Power",
       "Name": "Кольцо власти",
       "BuyPrice": 5,
       "SellPrice": 4
     },
     {
-      "Id": 6,
+      "Id": "Grimoire",
       "Name": "Гримуар",
       "BuyPrice": 10,
       "SellPrice": 5
     },
     {
-      "Id": 7,
+      "Id": "Mantle",
       "Name": "Мантия",
       "BuyPrice": 25,
       "SellPrice": 15
     },
     {
-      "Id": 8,
+      "Id": "Necklace",
       "Name": "Ожерелье",
       "BuyPrice": 10,
       "SellPrice": 5
     },
     {
-      "Id": 9,
+      "Id": "Recipe",
       "Name": "Рецепт",
       "BuyPrice": 25,
       "SellPrice": 10
@@ -57,10 +57,11 @@
   ],
   "Packs": [
     {
-      "ShopItems": [
-        6,
-        7,
-        9
+      "Id": "Young Wizard's pack",
+      "Items": [
+        "Grimoire",
+        "Mantle",
+        "Recipe"
       ],
       "Name": "Набор юного волшебника",
       "BuyPrice": 50,

@@ -1,5 +1,8 @@
+using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+
 public class ShopService : MonoBehaviour
 {
     private Storage _storage;
@@ -16,11 +19,23 @@ public class ShopService : MonoBehaviour
     {
         if (_storage.PlayerInventory.Money < shopItem.BuyPrice)
         {
+            Debug.Log("Нужно больше золота");
             return false;
         }
 
         Spend(shopItem.BuyPrice);
-        AddItemInInventory(shopItem);
+        var itemType = shopItem.GetType();
+        if (itemType == typeof(Pack))
+        {
+            Pack pack = shopItem as Pack;
+            foreach (var id in pack.Items)
+            {
+                var itemInPack = _storage.ShopConfig.ShopItems.FirstOrDefault(x => x.Id == id);
+                AddItemInInventory(itemInPack);
+            }
+        }
+        else
+            AddItemInInventory(shopItem);
         return true;
     }
 
@@ -32,7 +47,7 @@ public class ShopService : MonoBehaviour
 
     private void AddItemInInventory(ShopItem shopItem)
     {
-        var first = _storage.PlayerInventory.PlayerItems.SingleOrDefault(x => x.Id == shopItem.Id);
+        var first = _storage.PlayerInventory.PlayerItems.FirstOrDefault(x => x.Id == shopItem.Id);
         if (first == null)
         {
             var ownedItem = new OwnedItem
@@ -50,18 +65,19 @@ public class ShopService : MonoBehaviour
             first.Amount++;
         }
 
-        _dataProvider.Save();
+        _dataProvider.SavePlayerInventory();
     }
 
     private void DeleteOrReduceItemFromInventory(ShopItem shopItem)
     {
-        var first = _storage.PlayerInventory.PlayerItems.SingleOrDefault(x => x.Id == shopItem.Id);
+        var first = _storage.PlayerInventory.PlayerItems.FirstOrDefault(x => x.Id == shopItem.Id);
 
         if (first == null)
         {
             Debug.Log("Вещь не найдена в инвентаре игрока");
             return;
         }
+
         if (first.Amount == 1)
         {
             _storage.PlayerInventory.PlayerItems.Remove(first);
@@ -69,14 +85,14 @@ public class ShopService : MonoBehaviour
         else
             first.Amount--;
 
-        _dataProvider.Save();
+        _dataProvider.SavePlayerInventory();
     }
 
     private void AddCoins(int coins)
     {
         if (coins < 0)
         {
-            Debug.Log("Сумма меньше 0");
+            Debug.Log("Цена товара меньше 0");
             return;
         }
 
@@ -87,7 +103,7 @@ public class ShopService : MonoBehaviour
     {
         if (coins < 0)
         {
-            Debug.Log("Сумма меньше 0");
+            Debug.Log("Стоймость товара меньше 0");
             return;
         }
 
