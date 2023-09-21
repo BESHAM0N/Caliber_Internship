@@ -12,7 +12,10 @@ public class PlayerInventory
         set
         {
             if (value < 0)
+            {
                 Debug.Log("Количество монет не может быть отрицательным");
+                return;
+            }
             _money = value;
         }
     }

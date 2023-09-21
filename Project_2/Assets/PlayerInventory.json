@@ -1,1 +1,17 @@
-{"PlayerItems":[{"Amount":11,"Id":"Recipe","Name":"Рецепт","BuyPrice":25,"SellPrice":10},{"Amount":5,"Id":"Grimoire","Name":"Гримуар","BuyPrice":10,"SellPrice":5},{"Amount":5,"Id":"Mantle","Name":"Мантия","BuyPrice":25,"SellPrice":15}],"Money":700}
+{
+  "PlayerItems": [
+    {
+      "Id": "Grimoire",
+      "Amount": 4
+    },
+    {
+      "Id": "Mantle",
+      "Amount": 4
+    },
+    {
+      "Id": "Recipe",
+      "Amount": 3
+    }
+  ],
+  "Money": 950
+}

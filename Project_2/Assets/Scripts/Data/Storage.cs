@@ -1,5 +1,5 @@
-public class Storage
+public static class Storage
 {
-    public PlayerInventory PlayerInventory { get; set; }
-    public Shop ShopConfig { get; set; }
+    public static PlayerInventory PlayerInventory { get; set; }
+    public static Shop ShopConfig { get; set; }
 }

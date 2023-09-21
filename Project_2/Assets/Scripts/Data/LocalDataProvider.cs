@@ -8,12 +8,6 @@ public class LocalDataProvider
     private const string _inventoryFileName = "PlayerInventory";
     private const string _shopFileName = "Shop";
     private const string _saveFileExtension = ".json";
-    private Storage _storage;
-
-    public LocalDataProvider(Storage storage)
-    {
-        _storage = storage;
-    }
 
     private string _savePath => Application.dataPath;
 
@@ -33,7 +27,8 @@ public class LocalDataProvider
 
     public void SavePlayerInventory()
     {
-        File.WriteAllText(GetFullPath(_inventoryFileName), JsonConvert.SerializeObject(_storage.PlayerInventory));
+        var serializeObject = JsonConvert.SerializeObject(Storage.PlayerInventory, Formatting.Indented);
+        File.WriteAllText(GetFullPath(_inventoryFileName), serializeObject);
     }
 
     public bool LoadInventory()
@@ -46,20 +41,17 @@ public class LocalDataProvider
         if (string.IsNullOrEmpty(jsonText))
         {
             Debug.Log("Файл пустой");
-
             return false;
         }
 
         try
         {
-            _storage.PlayerInventory = JsonConvert.DeserializeObject<PlayerInventory>(jsonText);
+            Storage.PlayerInventory = JsonConvert.DeserializeObject<PlayerInventory>(jsonText);
         }
         catch (Exception ex)
         {
-            Debug.Log("Не удалось разобрать json файл");
-            throw ex;
+            Debug.Log($"Произошло исключение при чтении json файла: {ex.Message}");
         }
-
         return true;
     }
 
@@ -73,20 +65,17 @@ public class LocalDataProvider
         if (string.IsNullOrEmpty(jsonText))
         {
             Debug.Log("Файл пустой");
-
             return false;
         }
 
         try
         {
-            _storage.ShopConfig = JsonConvert.DeserializeObject<Shop>(jsonText);
+            Storage.ShopConfig = JsonConvert.DeserializeObject<Shop>(jsonText);
         }
         catch (Exception ex)
         {
-            Debug.Log("Не удалось разобрать json файл");
-            throw ex;
+            Debug.Log($"Произошло исключение при чтении json файла: {ex.Message}");
         }
-
         return true;
     }
     

@@ -1,65 +1,64 @@
 using System.Linq;
 using UnityEngine;
-public class ShopController : MonoBehaviour
-{
-    private Storage _storage;
+public class ShopController : MonoBehaviour {
+    
     private LocalDataProvider _dataProvider;
-
-    public void Initialize(
-        Storage storage,
-        LocalDataProvider dataProvider)
+    public void Initialize(LocalDataProvider dataProvider)
     {
-        _storage = storage;
         _dataProvider = dataProvider;
     }
 
-    public bool Buy(ShopItem shopItem)
+    public bool Buy(string id)
     {
-        if (_storage.PlayerInventory.Money < shopItem.BuyPrice)
+        var item = Storage.ShopConfig.ShopItems.FirstOrDefault(x => x.Id == id);
+        if (Storage.PlayerInventory.Money < item!.BuyPrice)
         {
             Debug.Log("Нужно больше золота");
             return false;
         }
 
-        Spend(shopItem.BuyPrice);
-        var itemType = shopItem.GetType();
-        if (itemType == typeof(Pack))
+        Spend(item!.BuyPrice);
+        
+        if (item.ItemType == ItemType.Pack)
         {
-            Pack pack = shopItem as Pack;
-            foreach (var id in pack!.Items)
+            foreach (var itemId in item.PackItems)
             {
-                var itemInPack = _storage.ShopConfig.ShopItems.FirstOrDefault(x => x.Id == id);
+                var itemInPack = Storage.ShopConfig.ShopItems.FirstOrDefault(x => x.Id == itemId);
                 AddItemInInventory(itemInPack);
             }
         }
         else
         {
-            AddItemInInventory(shopItem);
+            AddItemInInventory(item);
         }
         
         return true;
     }
 
-    public void Sell(ShopItem shopItem)
+    public void Sell(string id)
     {
-        AddCoins(shopItem.SellPrice);
-        DeleteOrReduceItemFromInventory(shopItem);
+        var itemInInventory = Storage.PlayerInventory.PlayerItems.FirstOrDefault(x => x.Id == id);
+        if (itemInInventory == null)
+        {
+            Debug.Log("Такого предмета нет в инветаре");
+            return;
+        }
+        var item = Storage.ShopConfig.ShopItems.FirstOrDefault(x => x.Id == id);
+        AddCoins(item!.SellPrice);
+        DeleteOrReduceItemFromInventory(itemInInventory);
     }
 
     private void AddItemInInventory(ShopItem shopItem)
     {
-        var itemFromInventory = _storage.PlayerInventory.PlayerItems.FirstOrDefault(x => x.Id == shopItem.Id);
+        var itemFromInventory = Storage.PlayerInventory.PlayerItems.FirstOrDefault(x => x.Id == shopItem.Id);
         if (itemFromInventory == null)
         {
             var ownedItem = new OwnedItem
             {
                 Id = shopItem.Id,
-                Name = shopItem.Name,
                 Amount = 1,
-                BuyPrice = shopItem.BuyPrice,
-                SellPrice = shopItem.SellPrice
             };
-            _storage.PlayerInventory.PlayerItems.Add(ownedItem);
+            Storage.PlayerInventory.PlayerItems.Add(ownedItem);
         }
         else
         {
@@ -69,19 +68,12 @@ public class ShopController : MonoBehaviour
         _dataProvider.SavePlayerInventory();
     }
 
-    private void DeleteOrReduceItemFromInventory(ShopItem shopItem)
+    private void DeleteOrReduceItemFromInventory(OwnedItem ownedItem)
     {
-        var itemFromInventory = _storage.PlayerInventory.PlayerItems.FirstOrDefault(x => x.Id == shopItem.Id);
-        if (itemFromInventory == null)
-        {
-            Debug.Log("Вещь не найдена в инвентаре игрока");
-            return;
-        }
-
-        if (itemFromInventory.Amount == 1)
-            _storage.PlayerInventory.PlayerItems.Remove(itemFromInventory);
+        if (ownedItem.Amount == 1)
+            Storage.PlayerInventory.PlayerItems.Remove(ownedItem);
         else
-            itemFromInventory.Amount--;
+            ownedItem.Amount--;
 
         _dataProvider.SavePlayerInventory();
     }
@@ -94,7 +86,7 @@ public class ShopController : MonoBehaviour
             return;
         }
 
-        _storage.PlayerInventory.Money += coins;
+        Storage.PlayerInventory.Money += coins;
     }
 
     private void Spend(int coins)
@@ -105,6 +97,6 @@ public class ShopController : MonoBehaviour
             return;
         }
 
-        _storage.PlayerInventory.Money -= coins;
+        Storage.PlayerInventory.Money -= coins;
     }
 }

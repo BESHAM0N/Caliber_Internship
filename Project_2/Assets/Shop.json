@@ -4,68 +4,76 @@
       "Id": "Strange Apple",
       "Name": "Странное яблоко",
       "BuyPrice": 2,
-      "SellPrice": 1
+      "SellPrice": 1,
+      "ItemType": 0
     },
     {
       "Id": "Health Potion",
       "Name": "Зелье здоровья",
       "BuyPrice": 5,
-      "SellPrice": 4
+      "SellPrice": 4,
+      "ItemType": 0
     },
     {
       "Id": "Mana Potion",
       "Name": "Зелье маны",
       "BuyPrice": 2,
-      "SellPrice": 1
+      "SellPrice": 1,
+      "ItemType": 0
     },
     {
       "Id": "Sapphire",
       "Name": "Сапфир",
       "BuyPrice": 4,
-      "SellPrice": 3
+      "SellPrice": 3,
+      "ItemType": 0
     },
     {
       "Id": "Ring of Power",
       "Name": "Кольцо власти",
       "BuyPrice": 5,
-      "SellPrice": 4
+      "SellPrice": 4,
+      "ItemType": 0
     },
     {
       "Id": "Grimoire",
       "Name": "Гримуар",
       "BuyPrice": 10,
-      "SellPrice": 5
+      "SellPrice": 5,
+      "ItemType": 0
     },
     {
       "Id": "Mantle",
       "Name": "Мантия",
       "BuyPrice": 25,
-      "SellPrice": 15
+      "SellPrice": 15,
+      "ItemType": 0
     },
     {
       "Id": "Necklace",
       "Name": "Ожерелье",
       "BuyPrice": 10,
-      "SellPrice": 5
+      "SellPrice": 5,
+      "ItemType": 0
     },
     {
       "Id": "Recipe",
       "Name": "Рецепт",
       "BuyPrice": 25,
-      "SellPrice": 10
-    }
-  ],
-  "Packs": [
+      "SellPrice": 10,
+      "ItemType": 0
+    },
     {
       "Id": "Young Wizard's pack",
-      "Items": [
+      "Name": "Набор юного волшебника",
+      "BuyPrice": 50,
+      "PackItems": [
         "Grimoire",
         "Mantle",
         "Recipe"
       ],
-      "Name": "Набор юного волшебника",
-      "BuyPrice": 50,
-      "SellPrice": 30
+      "ItemType": 1
     }
   ]
 }
+  
